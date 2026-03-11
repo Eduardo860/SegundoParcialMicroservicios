@@ -1,22 +1,6 @@
-version: "3.9"
-
-# ============================================================================
-# DOCKER COMPOSE - MICROSERVICIOS SPRING BOOT
-# ============================================================================
-#
-# Levanta: Eureka Server, API Gateway, Product/Order/Payment Services
-# Pre-requisito: LocalStack y MongoDB deben estar levantados por separado
-#
-# PASO 1: Levantar LocalStack
-#   docker-compose -f docker/localstack/docker-compose.yml up -d
-#
-# PASO 2: Levantar MongoDB
-#   docker-compose -f docker/mongodb/docker-compose.yml up -d
-#
-# PASO 3: Levantar Microservicios (este archivo)
-#   docker-compose up --build
-#
-# ============================================================================
+# Paso 1: docker-compose -f docker/localstack/docker-compose.yml up -d
+# Paso 2: docker-compose -f docker/mongodb/docker-compose.yml up -d
+# Paso 3: docker-compose up -d
 
 services:
   # ========================================
@@ -89,7 +73,8 @@ services:
       - AWS_ACCESS_KEY_ID=test
       - AWS_SECRET_ACCESS_KEY=test
       - CLOUDWATCH_ENDPOINT=http://localstack:4566
-      - SPRING_DATA_MONGODB_URI=mongodb://mongo-productos:27017/productos_db
+      - SPRING_DATA_MONGODB_URI=mongodb://root:rootpassword@mongo-productos:27017/productos_db?authSource=admin
+      - SPRING_CLOUD_COMPATIBILITY_VERIFIER_ENABLED=false
     depends_on:
       eureka-server:
         condition: service_healthy
@@ -116,7 +101,8 @@ services:
       - AWS_ACCESS_KEY_ID=test
       - AWS_SECRET_ACCESS_KEY=test
       - CLOUDWATCH_ENDPOINT=http://localstack:4566
-      - SPRING_DATA_MONGODB_URI=mongodb://mongo-ordenes:27017/ordenes_db
+      - SPRING_DATA_MONGODB_URI=mongodb://root:rootpassword@mongo-ordenes:27017/ordenes_db?authSource=admin
+      - SPRING_CLOUD_COMPATIBILITY_VERIFIER_ENABLED=false
     depends_on:
       eureka-server:
         condition: service_healthy
@@ -143,7 +129,8 @@ services:
       - AWS_ACCESS_KEY_ID=test
       - AWS_SECRET_ACCESS_KEY=test
       - CLOUDWATCH_ENDPOINT=http://localstack:4566
-      - SPRING_DATA_MONGODB_URI=mongodb://mongo-pagos:27017/pagos_db
+      - SPRING_DATA_MONGODB_URI=mongodb://root:rootpassword@mongo-pagos:27017/pagos_db?authSource=admin
+      - SPRING_CLOUD_COMPATIBILITY_VERIFIER_ENABLED=false
     depends_on:
       eureka-server:
         condition: service_healthy

@@ -14,6 +14,7 @@ public class Order {
     private LocalDateTime createdAt;
 
     public Order() {
+        this.createdAt = LocalDateTime.now();
     }
 
     public Order(Long userId, Double totalAmount, String status) {

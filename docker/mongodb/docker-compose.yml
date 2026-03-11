@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   mongo-productos:
     image: mongo:7.0

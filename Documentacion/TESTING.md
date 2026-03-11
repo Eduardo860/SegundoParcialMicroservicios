@@ -8,13 +8,22 @@
 
 ## Paso 1: Levantar el sistema completo
 
-Desde la raíz del proyecto:
+El sistema requiere 3 pasos en orden desde la raíz del proyecto:
 
 ```bash
+# 1. Levantar LocalStack (CloudWatch/Logs)
+docker-compose -f docker/localstack/docker-compose.yml up -d
+
+# 2. Levantar MongoDB (esperar ~10s a que inicialice)
+docker-compose -f docker/mongodb/docker-compose.yml up -d
+
+# 3. Levantar todos los microservicios
 docker-compose up -d
 ```
 
-Espera 2-3 minutos a que todo esté saludable.
+> **¿Por qué 3 pasos?** LocalStack debe crear la red `examenprimerparcial_microservices-network` y los log groups antes de que los servicios arranquen. MongoDB debe estar listo antes de que los servicios intenten conectarse.
+
+Espera 1-2 minutos a que Eureka registre todos los servicios.
 
 ## Paso 2: Verificar que el sistema está arriba
 
@@ -147,7 +156,17 @@ curl http://localhost:8080/pagos/{ID_DEL_PAGO}
 curl http://localhost:8080/pagos/orden/{ID_DE_LA_ORDEN}
 ```
 
-### 10. PAYMENTS - Procesar reembolso
+### 10. Frontend (interfaz visual)
+
+Abre en el navegador: **http://localhost:3000**
+
+Tabs disponibles:
+- **Productos** — CRUD visual de productos
+- **Órdenes** — Crear y consultar órdenes
+- **Pagos** — Procesar y consultar pagos
+- **Logs CloudWatch** — Ver logs en tiempo real de los 5 servicios
+
+### 11. PAYMENTS - Procesar reembolso
 
 ```bash
 curl -X PUT http://localhost:8080/pagos/{ID_DEL_PAGO}/reembolso
@@ -179,15 +198,33 @@ docker logs infra-eureka-server -f
 ### Logs en CloudWatch (LocalStack)
 
 ```bash
-# Listar log groups
-aws logs describe-log-groups --endpoint-url=http://localhost:4566
+# Listar log groups disponibles
+aws --endpoint-url=http://localhost:4566 logs describe-log-groups \
+  --region us-east-1 --query 'logGroups[].logGroupName' --output text
 
-# Ver logs del servicio de productos
-aws logs get-log-events \
-  --log-group-name=producto-log-group \
-  --log-stream-name=producto-service-stream \
-  --endpoint-url=http://localhost:4566
+# Ver logs de productos (formato legible con jq)
+aws --endpoint-url=http://localhost:4566 logs get-log-events \
+  --log-group-name producto-log-group \
+  --log-stream-name producto-service-stream \
+  --region us-east-1 --output json | \
+  jq -r '.events[] | "[\(.timestamp / 1000 | strftime("%Y-%m-%d %H:%M:%S"))] \(.message)"'
+
+# Ver logs de órdenes
+aws --endpoint-url=http://localhost:4566 logs get-log-events \
+  --log-group-name ordenes-log-group \
+  --log-stream-name ordenes-service-stream \
+  --region us-east-1 --output json | \
+  jq -r '.events[] | "[\(.timestamp / 1000 | strftime("%Y-%m-%d %H:%M:%S"))] \(.message)"'
+
+# Ver logs de pagos
+aws --endpoint-url=http://localhost:4566 logs get-log-events \
+  --log-group-name pagos-log-group \
+  --log-stream-name pagos-service-stream \
+  --region us-east-1 --output json | \
+  jq -r '.events[] | "[\(.timestamp / 1000 | strftime("%Y-%m-%d %H:%M:%S"))] \(.message)"'
 ```
+
+> Ver referencia completa de comandos en `CLOUDWATCH_LOGS.md`
 
 ---
 

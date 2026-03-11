@@ -6,6 +6,20 @@ spring:
     name: apigateway
   cloud:
     gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "http://localhost:3000"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders:
+              - "*"
+            allowCredentials: false
       discovery:
         locator:
           enabled: true
@@ -16,24 +30,21 @@ spring:
           predicates:
             - Path=/productos/**
           filters:
-            - StripPrefix=1
-            - PrefixPath=/productos-api
+            - RewritePath=/productos(?<segment>.*), /productos-api$\{segment}
         
         - id: ordenes-service
           uri: lb://orderservice
           predicates:
             - Path=/ordenes/**
           filters:
-            - StripPrefix=1
-            - PrefixPath=/ordenes-api
+            - RewritePath=/ordenes(?<segment>.*), /orders-api$\{segment}
         
         - id: pagos-service
           uri: lb://paymentservice
           predicates:
             - Path=/pagos/**
           filters:
-            - StripPrefix=1
-            - PrefixPath=/pagos-api
+            - RewritePath=/pagos(?<segment>.*), /pagos-api$\{segment}
 
 eureka:
   client:

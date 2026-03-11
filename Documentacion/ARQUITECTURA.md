@@ -70,9 +70,16 @@
 - Persistencia en volúmenes
 
 ### 5. CloudWatch via LocalStack (4566)
-- Simula AWS para desarrollo
+- Simula AWS para desarrollo local
 - 5 log groups (uno por servicio)
-- Los logs se envían automáticamente
+- Los logs se envían automáticamente en cada petición HTTP
+- Implementado con `CloudWatchAppender.java` (plugin Log4j2 personalizado, AWS SDK v2)
+- Credenciales ficticias: `AWS_ACCESS_KEY_ID=test` / `AWS_SECRET_ACCESS_KEY=test`
+
+### 6. Frontend (Puerto 3000)
+- Interfaz web para interactuar con los servicios
+- 4 pestañas: Productos, Órdenes, Pagos, Logs CloudWatch
+- Comunica con los microservicios via API Gateway (8080)
 
 ## Flujo de una solicitud
 
@@ -102,11 +109,13 @@
 
 | Componente | Versión |
 |-----------|---------|
-| Spring Boot | 3.3.4 |
+| Spring Boot | 3.2.6 |
 | Spring Cloud | 2023.0.0 |
+| Log4j2 | 2.20.0 |
+| AWS SDK v2 (CloudWatch) | 2.20.0 |
 | MongoDB | 7.0 |
 | Docker | Actual |
-| LocalStack | Actual |
+| LocalStack | 4.14.x |
 
 ## Puertos
 
@@ -121,3 +130,4 @@
 | Product Service | 8081 |
 | Order Service | 8082 |
 | Payment Service | 8083 |
+| Frontend | 3000 |

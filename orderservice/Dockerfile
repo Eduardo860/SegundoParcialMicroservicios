@@ -14,6 +14,6 @@ WORKDIR /app
 
 COPY --from=builder /app/target/orderservice-1.0.0.jar app.jar
 
-EXPOSE 8080
+EXPOSE 8082
 
 ENTRYPOINT ["java", "-jar", "app.jar"]

@@ -1,1 +1,191 @@
-<!DOCTYPE html><html lang=es><head><meta charset=UTF-8><title>Panel</title><link rel=stylesheet href=styles.css></head><body><div class=container><header><h1>🚀 Panel</h1></header><main><button onclick=testAPI()>Test</button><div id=resp class=response></div></main></div><script src=app.js></script></body></html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel Microservicios</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Panel de Microservicios</h1>
+      <div id="health-badge" class="badge badge-checking">Verificando...</div>
+    </header>
+
+    <nav class="tabs">
+      <button class="tab active" onclick="showTab('productos', this)">📦 Productos</button>
+      <button class="tab" onclick="showTab('ordenes', this)">📋 Órdenes</button>
+      <button class="tab" onclick="showTab('pagos', this)">💳 Pagos</button>
+      <button class="tab" onclick="showTab('logs', this)">📊 Logs</button>
+    </nav>
+
+    <!-- PRODUCTOS -->
+    <section id="tab-productos" class="tab-content active">
+      <div class="card">
+        <h2>Crear Producto</h2>
+        <div class="form-grid">
+          <input id="p-name" type="text" placeholder="Nombre" />
+          <input id="p-desc" type="text" placeholder="Descripción" />
+          <input id="p-price" type="number" placeholder="Precio" step="0.01" />
+          <input id="p-stock" type="number" placeholder="Stock" />
+        </div>
+        <button onclick="crearProducto()">➕ Crear Producto</button>
+      </div>
+
+      <div class="card">
+        <h2>Buscar por Nombre</h2>
+        <p class="hint">Devuelve todos los productos que contengan ese texto en el nombre.</p>
+        <div class="inline-form">
+          <input id="p-nombre" type="text" placeholder="Nombre a buscar..." />
+          <button onclick="buscarPorNombre()">🔍 Buscar</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Buscar por ID</h2>
+        <div class="inline-form">
+          <input id="p-id" type="text" placeholder="ID del producto" />
+          <button onclick="getProducto()">🔍 Buscar</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Todos los Productos</h2>
+        <button onclick="listarProductos()">📋 Listar Todos</button>
+      </div>
+
+      <div id="resp-productos" class="response"></div>
+    </section>
+
+    <!-- ORDENES -->
+    <section id="tab-ordenes" class="tab-content">
+      <div class="card">
+        <h2>Crear Orden</h2>
+        <div class="form-grid">
+          <input id="o-userid" type="number" placeholder="User ID" />
+          <input id="o-amount" type="number" placeholder="Total Amount" step="0.01" />
+          <select id="o-status">
+            <option value="PENDIENTE">PENDIENTE</option>
+            <option value="CONFIRMADO">CONFIRMADO</option>
+            <option value="CANCELADO">CANCELADO</option>
+          </select>
+        </div>
+        <button onclick="crearOrden()">➕ Crear Orden</button>
+      </div>
+
+      <div class="card">
+        <h2>Buscar Orden por ID</h2>
+        <div class="inline-form">
+          <input id="o-id" type="text" placeholder="ID de la orden" />
+          <button onclick="getOrden()">🔍 Buscar</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Órdenes por Usuario</h2>
+        <p class="hint">Devuelve todas las órdenes del usuario.</p>
+        <div class="inline-form">
+          <input id="o-userid-buscar" type="number" placeholder="User ID" />
+          <button onclick="getOrdenesPorUsuario()">👤 Buscar</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Actualizar Estado de Orden</h2>
+        <div class="form-grid">
+          <input id="o-status-id" type="text" placeholder="ID de la orden" />
+          <select id="o-nuevo-status">
+            <option value="PENDIENTE">PENDIENTE</option>
+            <option value="CONFIRMADO">CONFIRMADO</option>
+            <option value="CANCELADO">CANCELADO</option>
+            <option value="ENTREGADO">ENTREGADO</option>
+          </select>
+        </div>
+        <button onclick="actualizarEstado()">✏️ Actualizar Estado</button>
+      </div>
+
+      <div id="resp-ordenes" class="response"></div>
+    </section>
+
+    <!-- PAGOS -->
+    <section id="tab-pagos" class="tab-content">
+      <div class="card">
+        <h2>Procesar Pago</h2>
+        <div class="form-grid">
+          <input id="pg-orderid" type="text" placeholder="Order ID" />
+          <input id="pg-amount" type="number" placeholder="Amount" step="0.01" />
+          <select id="pg-method">
+            <option value="CREDIT_CARD">CREDIT_CARD</option>
+            <option value="DEBIT_CARD">DEBIT_CARD</option>
+            <option value="CASH">CASH</option>
+          </select>
+        </div>
+        <button onclick="procesarPago()">💳 Procesar Pago</button>
+      </div>
+
+      <div class="card">
+        <h2>Buscar Pago por ID</h2>
+        <div class="inline-form">
+          <input id="pg-id" type="text" placeholder="ID del pago" />
+          <button onclick="getPago()">🔍 Buscar</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Pagos por Orden</h2>
+        <p class="hint">Devuelve todos los pagos de una orden.</p>
+        <div class="inline-form">
+          <input id="pg-orderid-buscar" type="text" placeholder="Order ID" />
+          <button onclick="getPagosPorOrden()">📋 Buscar</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Reembolsar Pago</h2>
+        <div class="inline-form">
+          <input id="pg-reembolso-id" type="text" placeholder="ID del pago" />
+          <button class="btn-danger" onclick="reembolsarPago()">↩️ Reembolsar</button>
+        </div>
+      </div>
+
+      <div id="resp-pagos" class="response"></div>
+    </section>
+
+    <!-- LOGS -->
+    <section id="tab-logs" class="tab-content">
+      <div class="card">
+        <h2>☁️ CloudWatch Logs (LocalStack)</h2>
+        <div class="inline-form">
+          <select id="log-group-select">
+            <option value="producto-log-group">producto-log-group</option>
+            <option value="ordenes-log-group">ordenes-log-group</option>
+            <option value="pagos-log-group">pagos-log-group</option>
+            <option value="apigateway-log-group">apigateway-log-group</option>
+            <option value="eureka-log-group">eureka-log-group</option>
+          </select>
+          <button onclick="cargarCloudWatchLogs()">🔄 Cargar</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>🐳 Logs del Contenedor Docker</h2>
+        <div class="inline-form">
+          <select id="container-select">
+            <option value="infra-productservice">Product Service</option>
+            <option value="infra-orderservice">Order Service</option>
+            <option value="infra-paymentservice">Payment Service</option>
+            <option value="infra-apigateway">API Gateway</option>
+            <option value="infra-eureka-server">Eureka Server</option>
+          </select>
+          <button onclick="cargarContainerLogs()">🔄 Cargar</button>
+        </div>
+      </div>
+
+      <div id="resp-logs" class="response"></div>
+    </section>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

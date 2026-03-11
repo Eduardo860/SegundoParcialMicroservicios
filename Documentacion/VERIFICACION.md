@@ -87,11 +87,12 @@
 
 ### 7. CloudWatch Logs
 
-- [x] Dependencia: `aws-request-signing-apache-interceptor` y `cloudwatchlogs`
-- [x] Log4j2 configurado en cada servicio
+- [x] Dependencia: `software.amazon.awssdk:cloudwatchlogs:2.20.0` + `spring-boot-starter-log4j2`
+- [x] Plugin personalizado: `CloudWatchAppender.java` en `com.amazonaws.cloudwatch.log4j2`
+- [x] Log4j2 configurado en cada servicio via `log4j2.xml`
 - [x] Appenders:
-  - [x] Console (para Docker logs)
-  - [x] CloudWatchAppender (para LocalStack)
+  - [x] Console (para `docker logs`)
+  - [x] CloudWatchAppender (para LocalStack/AWS)
 - [x] Log Groups creados:
   - [x] `producto-log-group` → ProductService
   - [x] `ordenes-log-group` → OrderService
@@ -108,7 +109,7 @@
 
 #### Requerimiento: 3 docker-compose separados
 
-- [x] **docker/microservices/docker-compose.yml**
+- [x] **docker-compose.yml (raíz)** — Microservicios
   - [x] Eureka Server
   - [x] API Gateway
   - [x] Producto Service
@@ -116,7 +117,7 @@
   - [x] Pago Service
   - [x] Health checks
   - [x] Networking
-  - [x] Environment variables
+  - [x] Environment variables (incluyendo `AWS_*` para CloudWatch)
 
 - [x] **docker/mongodb/docker-compose.yml**
   - [x] mongo-productos (puerto 27017)
@@ -136,13 +137,15 @@
 
 #### Requerimiento: docker-compose de referencia en raíz
 
-- [x] **docker-compose.yml (raíz)**
-  - [x] Integra todos los servicios
+- [x] **docker-compose.yml (raíz)** — Archivo de referencia
+  - [x] Integra todos los servicios (microservicios + MongoDB + LocalStack como externos)
   - [x] Orden correcto de dependencias
   - [x] Health checks adecuados
-  - [x] Networking compartida
+  - [x] Networking compartida (`microservices-network`)
   - [x] Volúmenes persistentes
-  - [x] Comentarios organizations con ========
+  - [x] Comentarios organizados con ========
+
+> **Nota de arranque:** Se recomienda levantar en orden: `docker/localstack/` → `docker/mongodb/` → raíz
 
 ### 9. Logging y Observabilidad
 
@@ -167,8 +170,9 @@
 
 ### 11. Configuración Spring Boot
 
-- [x] Spring Boot 3.2.0
+- [x] Spring Boot 3.2.6
 - [x] Spring Cloud 2023.0.0
+- [x] Log4j2 2.20.0 (Logback excluido, CloudWatchAppender personalizado)
 - [x] Todos los archivos `application.yml`:
   - [x] `server.port` correcto
   - [x] `spring.application.name` correcto
@@ -193,6 +197,8 @@ Cada uno contiene todo lo necesario para buildear y deployar independientemente.
 - [x] **README.md** - Instrucciones de uso
 - [x] **ARQUITECTURA.md** - Documentación técnica detallada
 - [x] **VERIFICACION.md** - Este checklist
+- [x] **CLOUDWATCH_LOGS.md** - Guía completa de CloudWatch: credenciales, comandos, arquitectura
+- [x] **TESTING.md** - Testing manual y troubleshooting
 
 ### 14. Networking & Service Discovery
 
