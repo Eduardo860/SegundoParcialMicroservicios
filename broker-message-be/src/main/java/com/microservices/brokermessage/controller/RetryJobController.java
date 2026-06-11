@@ -4,9 +4,11 @@ import com.microservices.brokermessage.dto.KafkaMessageDto;
 import com.microservices.brokermessage.model.OrderRetryJob;
 import com.microservices.brokermessage.model.PaymentRetryJob;
 import com.microservices.brokermessage.model.ProductRetryJob;
+import com.microservices.brokermessage.model.EnvioRetryJob;
 import com.microservices.brokermessage.repository.OrderRetryJobRepository;
 import com.microservices.brokermessage.repository.PaymentRetryJobRepository;
 import com.microservices.brokermessage.repository.ProductRetryJobRepository;
+import com.microservices.brokermessage.repository.EnvioRetryJobRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,9 @@ public class RetryJobController {
 
     @Autowired
     private PaymentRetryJobRepository paymentRetryJobRepository;
+
+    @Autowired
+    private EnvioRetryJobRepository envioRetryJobRepository;
 
     @Autowired
     private KafkaTemplate<String, KafkaMessageDto> kafkaTemplate;
@@ -75,6 +80,18 @@ public class RetryJobController {
                 .orElse(ResponseEntity.status(404).body(err(404, "Job no encontrado: " + id)));
     }
 
+    @GetMapping("/envios")
+    public ResponseEntity<List<EnvioRetryJob>> getEnvioJobs() {
+        return ResponseEntity.ok(envioRetryJobRepository.findAll());
+    }
+
+    @GetMapping("/envios/{id}")
+    public ResponseEntity<?> getEnvioJobById(@PathVariable UUID id) {
+        return envioRetryJobRepository.findById(id)
+                .<ResponseEntity<?>>map(ResponseEntity::ok)
+                .orElse(ResponseEntity.status(404).body(err(404, "Job no encontrado: " + id)));
+    }
+
     // ─── Publicar mensajes Kafka (simulación de fallo) ────────────────────────
 
     @PostMapping("/trigger/product")
@@ -108,6 +125,18 @@ public class RetryJobController {
         Map<String, Object> res = new LinkedHashMap<>();
         res.put("status", 200);
         res.put("message", "Mensaje enviado a payments_retry_jobs");
+        res.put("entityId", message.getEntityId());
+        res.put("action", message.getAction());
+        return ResponseEntity.ok(res);
+    }
+
+    @PostMapping("/trigger/envio")
+    public ResponseEntity<Map<String, Object>> triggerEnvioRetry(@RequestBody KafkaMessageDto message) {
+        logger.info("Manual trigger: envios_retry_jobs entityId={} action={}", message.getEntityId(), message.getAction());
+        kafkaTemplate.send("envios_retry_jobs", message);
+        Map<String, Object> res = new LinkedHashMap<>();
+        res.put("status", 200);
+        res.put("message", "Mensaje enviado a envios_retry_jobs");
         res.put("entityId", message.getEntityId());
         res.put("action", message.getAction());
         return ResponseEntity.ok(res);

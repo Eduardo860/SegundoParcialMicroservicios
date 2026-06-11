@@ -13,7 +13,8 @@
 <body>
   <div class="container">
     <header>
-      <h1><i class='bx bx-grid-alt' style='color: var(--mongo-lime); font-size: 2.2rem;'></i> Panel de Microservicios</h1>
+      <h1><i class='bx bx-grid-alt' style='color: var(--mongo-lime); font-size: 2.2rem;'></i> Panel de Microservicios
+      </h1>
       <div id="health-badge" class="badge badge-checking"><i class='bx bx-loader-alt bx-spin'></i> Verificando...</div>
     </header>
 
@@ -26,7 +27,7 @@
         <button class="tab" onclick="showTab('broker', this)"><i class='bx bx-transfer'></i> Broker</button>
         <button class="tab" onclick="showTab('health', this)"><i class='bx bx-heart-circle'></i> Health</button>
         <button class="tab" onclick="showTab('logs', this)"><i class='bx bx-bar-chart-square'></i> Logs</button>
-        <button class="tab" onclick="showTab('flujos', this)"><i class='bx bx-test-tube'></i> Flujos E2E</button>
+        <button class="tab" onclick="showTab('flujos', this)"><i class='bx bx-test-tube'></i> Flujos</button>
       </nav>
 
       <div class="content-area">
@@ -34,18 +35,25 @@
         <section id="tab-productos" class="tab-content active">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
             <h2><i class='bx bx-package'></i> Inventario de Productos</h2>
-            <button class="btn-outline" onclick="listarProductos()"><i class='bx bx-refresh'></i> Refrescar Tabla</button>
+            <button class="btn-outline" onclick="listarProductos()"><i class='bx bx-refresh'></i> Refrescar
+              Tabla</button>
           </div>
-          
+
           <div class="sub-nav">
-            <button class="sub-tab" onclick="showSubTab('productos', 'sub-p-create', this)"><i class='bx bx-plus'></i> Crear</button>
-            <button class="sub-tab" onclick="showSubTab('productos', 'sub-p-search-name', this)"><i class='bx bx-search'></i> Buscar (Nombre)</button>
-            <button class="sub-tab" onclick="showSubTab('productos', 'sub-p-search-id', this)"><i class='bx bx-search-alt'></i> Buscar (ID)</button>
-            <button class="sub-tab" onclick="showSubTab('productos', 'sub-p-update', this)"><i class='bx bx-edit'></i> Actualizar</button>
-            <button class="sub-tab" onclick="showSubTab('productos', 'sub-p-delete', this)"><i class='bx bx-trash'></i> Eliminar</button>
-            <button class="sub-tab active" onclick="showSubTab('productos', '', this)"><i class='bx bx-hide'></i> Ocultar Opciones</button>
+            <button class="sub-tab" onclick="showSubTab('productos', 'sub-p-create', this)"><i class='bx bx-plus'></i>
+              Crear</button>
+            <button class="sub-tab" onclick="showSubTab('productos', 'sub-p-search-name', this)"><i
+                class='bx bx-search'></i> Buscar (Nombre)</button>
+            <button class="sub-tab" onclick="showSubTab('productos', 'sub-p-search-id', this)"><i
+                class='bx bx-search-alt'></i> Buscar (ID)</button>
+            <button class="sub-tab" onclick="showSubTab('productos', 'sub-p-update', this)"><i class='bx bx-edit'></i>
+              Actualizar</button>
+            <button class="sub-tab" onclick="showSubTab('productos', 'sub-p-delete', this)"><i class='bx bx-trash'></i>
+              Eliminar</button>
+            <button class="sub-tab active" onclick="showSubTab('productos', '', this)"><i class='bx bx-hide'></i>
+              Ocultar Opciones</button>
           </div>
-          
+
           <div class="sub-tab-container">
             <div id="sub-p-create" class="sub-tab-content">
               <div class="card">
@@ -63,7 +71,8 @@
             <div id="sub-p-search-name" class="sub-tab-content">
               <div class="card">
                 <h2><i class='bx bx-search'></i> Buscar por Nombre</h2>
-                <p class="hint"><i class='bx bx-info-circle'></i> Devuelve todos los productos que contengan ese texto en el nombre.</p>
+                <p class="hint"><i class='bx bx-info-circle'></i> Devuelve todos los productos que contengan ese texto
+                  en el nombre.</p>
                 <div class="inline-form">
                   <input id="p-nombre" type="text" placeholder="Nombre a buscar..." />
                   <button onclick="buscarPorNombre()"><i class='bx bx-search'></i> Buscar</button>
@@ -114,17 +123,24 @@
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
             <h2><i class='bx bx-list-ul'></i> Registro de Órdenes</h2>
             <div style="display: flex; gap: 10px; align-items: center;">
-              <button class="btn-outline" onclick="listarOrdenes(true)"><i class='bx bx-sort-a-z'></i> Ordenar Estatus</button>
-              <button class="btn-outline" onclick="listarOrdenes()"><i class='bx bx-refresh'></i> Refrescar Tabla</button>
+              <button class="btn-outline" onclick="listarOrdenes(true)"><i class='bx bx-sort-a-z'></i> Ordenar
+                Estatus</button>
+              <button class="btn-outline" onclick="listarOrdenes()"><i class='bx bx-refresh'></i> Refrescar
+                Tabla</button>
             </div>
           </div>
 
           <div class="sub-nav">
-            <button class="sub-tab" onclick="showSubTab('ordenes', 'sub-o-create', this)"><i class='bx bx-plus'></i> Crear</button>
-            <button class="sub-tab" onclick="showSubTab('ordenes', 'sub-o-search-id', this)"><i class='bx bx-search-alt'></i> Buscar (ID)</button>
-            <button class="sub-tab" onclick="showSubTab('ordenes', 'sub-o-search-user', this)"><i class='bx bx-user-pin'></i> Órdenes por Usuario</button>
-            <button class="sub-tab" onclick="showSubTab('ordenes', 'sub-o-update', this)"><i class='bx bx-slider-alt'></i> Actualizar Estado</button>
-            <button class="sub-tab active" onclick="showSubTab('ordenes', '', this)"><i class='bx bx-hide'></i> Ocultar Opciones</button>
+            <button class="sub-tab" onclick="showSubTab('ordenes', 'sub-o-create', this)"><i class='bx bx-plus'></i>
+              Crear</button>
+            <button class="sub-tab" onclick="showSubTab('ordenes', 'sub-o-search-id', this)"><i
+                class='bx bx-search-alt'></i> Buscar (ID)</button>
+            <button class="sub-tab" onclick="showSubTab('ordenes', 'sub-o-search-user', this)"><i
+                class='bx bx-user-pin'></i> Órdenes por Usuario</button>
+            <button class="sub-tab" onclick="showSubTab('ordenes', 'sub-o-update', this)"><i
+                class='bx bx-slider-alt'></i> Actualizar Estado</button>
+            <button class="sub-tab active" onclick="showSubTab('ordenes', '', this)"><i class='bx bx-hide'></i> Ocultar
+              Opciones</button>
           </div>
 
           <div class="sub-tab-container">
@@ -134,7 +150,9 @@
                 <div class="form-grid">
                   <input id="o-userid" type="number" placeholder="User ID" />
                   <input id="o-productid" type="text" placeholder="Product ID" />
+                  <input id="o-quantity" type="number" placeholder="Cantidad" min="1" value="1" />
                   <input id="o-amount" type="number" placeholder="Total Amount" step="0.01" />
+                  <input id="o-email" type="email" placeholder="Customer Email" />
                   <select id="o-status">
                     <option value="PENDIENTE">PENDIENTE</option>
                     <option value="CONFIRMADO">CONFIRMADO</option>
@@ -176,6 +194,7 @@
                     <option value="CONFIRMADO">CONFIRMADO</option>
                     <option value="CANCELADO">CANCELADO</option>
                     <option value="ENTREGADO">ENTREGADO</option>
+                    <option value="PAGADO">PAGADO</option>
                   </select>
                 </div>
                 <button onclick="actualizarEstado()"><i class='bx bx-save'></i> Actualizar Estado</button>
@@ -194,11 +213,16 @@
           </div>
 
           <div class="sub-nav">
-            <button class="sub-tab" onclick="showSubTab('pagos', 'sub-pg-create', this)"><i class='bx bx-money'></i> Procesar Pago</button>
-            <button class="sub-tab" onclick="showSubTab('pagos', 'sub-pg-search-id', this)"><i class='bx bx-search-alt'></i> Buscar (ID)</button>
-            <button class="sub-tab" onclick="showSubTab('pagos', 'sub-pg-search-order', this)"><i class='bx bx-list-check'></i> Pagos por Orden</button>
-            <button class="sub-tab" onclick="showSubTab('pagos', 'sub-pg-refund', this)"><i class='bx bx-undo'></i> Reembolsar</button>
-            <button class="sub-tab active" onclick="showSubTab('pagos', '', this)"><i class='bx bx-hide'></i> Ocultar Opciones</button>
+            <button class="sub-tab" onclick="showSubTab('pagos', 'sub-pg-create', this)"><i class='bx bx-money'></i>
+              Procesar Pago</button>
+            <button class="sub-tab" onclick="showSubTab('pagos', 'sub-pg-search-id', this)"><i
+                class='bx bx-search-alt'></i> Buscar (ID)</button>
+            <button class="sub-tab" onclick="showSubTab('pagos', 'sub-pg-search-order', this)"><i
+                class='bx bx-list-check'></i> Pagos por Orden</button>
+            <button class="sub-tab" onclick="showSubTab('pagos', 'sub-pg-refund', this)"><i class='bx bx-undo'></i>
+              Reembolsar</button>
+            <button class="sub-tab active" onclick="showSubTab('pagos', '', this)"><i class='bx bx-hide'></i> Ocultar
+              Opciones</button>
           </div>
 
           <div class="sub-tab-container">
@@ -257,7 +281,8 @@
         <section id="tab-envios" class="tab-content">
           <div class="card">
             <h2><i class='bx bx-calendar-event'></i> Envíos Programados</h2>
-            <p class="hint"><i class='bx bx-info-circle'></i> Consulta todos los envíos registrados tras el pago completo de las órdenes (vienen de Postgres).</p>
+            <p class="hint"><i class='bx bx-info-circle'></i> Consulta todos los envíos registrados tras el pago
+              completo de las órdenes (vienen de Postgres).</p>
             <button onclick="listarEnvios()"><i class='bx bx-list-ul'></i> Listar Envíos</button>
           </div>
           <div id="resp-envios" class="response"></div>
@@ -267,7 +292,8 @@
         <section id="tab-broker" class="tab-content">
           <div class="card">
             <h2><i class='bx bx-bolt-circle'></i> Trigger Retry — Producto</h2>
-            <p class="hint"><i class='bx bx-info-circle'></i> Publica un mensaje en Kafka (product_retry_jobs). El listener lo guarda en PostgreSQL y el scheduler reintenta la operación.</p>
+            <p class="hint"><i class='bx bx-info-circle'></i> Publica un mensaje en Kafka (product_retry_jobs). El
+              listener lo guarda en PostgreSQL y el scheduler reintenta la operación.</p>
             <div class="form-grid">
               <input id="br-product-entityid" type="text" placeholder="Entity ID (productoId)" />
               <select id="br-product-action">
@@ -276,7 +302,8 @@
                 <option value="DELETE">DELETE</option>
               </select>
             </div>
-            <textarea id="br-product-data" rows="3" placeholder='{"name":"Laptop Pro","price":1299.99,"stock":5}'></textarea>
+            <textarea id="br-product-data" rows="3"
+              placeholder='{"name":"Laptop Pro","price":1299.99,"stock":5}'></textarea>
             <button onclick="triggerRetry('product')"><i class='bx bx-send'></i> Enviar a Kafka</button>
           </div>
 
@@ -311,12 +338,26 @@
           </div>
 
           <div class="card">
+            <h2><i class='bx bx-bolt-circle'></i> Trigger Retry — Envío</h2>
+            <p class="hint"><i class='bx bx-info-circle'></i> Publica un mensaje en Kafka (envios_retry_jobs).</p>
+            <div class="form-grid">
+              <input id="br-envio-entityid" type="text" placeholder="Entity ID (ordenId)" />
+              <select id="br-envio-action">
+                <option value="CREATE">CREATE</option>
+              </select>
+            </div>
+            <textarea id="br-envio-data" rows="3" placeholder='{"customerEmail":"test@example.com"}'></textarea>
+            <button onclick="triggerRetry('envio')"><i class='bx bx-send'></i> Enviar a Kafka</button>
+          </div>
+
+          <div class="card">
             <h2><i class='bx bx-list-check'></i> Listar Retry Jobs</h2>
             <p class="hint"><i class='bx bx-info-circle'></i> Jobs almacenados en PostgreSQL.</p>
             <div class="inline-form">
               <button onclick="listarJobs('products')"><i class='bx bx-box'></i> Productos</button>
               <button onclick="listarJobs('orders')"><i class='bx bx-receipt'></i> Órdenes</button>
               <button onclick="listarJobs('payments')"><i class='bx bx-credit-card'></i> Pagos</button>
+              <button onclick="listarJobs('envios')"><i class='bx bx-envelope'></i> Envíos</button>
             </div>
           </div>
 
@@ -381,23 +422,32 @@
             <div class="form-grid" style="grid-template-columns: 1fr; gap: 15px;">
               <!-- Flujo 1 -->
               <div style="border-left: 4px solid var(--primary-hover); padding-left: 15px; padding-bottom: 10px;">
-                <h3 style="margin-top: 0; color: var(--primary);"><i class='bx bx-sync'></i> Flujo 1: Actualizar Inventario</h3>
+                <h3 style="margin-top: 0; color: var(--primary);"><i class='bx bx-sync'></i> Flujo 1: Actualizar
+                  Inventario</h3>
 
                 <div class="form-grid" style="margin-top: 10px;">
                   <div>
-                    <span style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Nombre del Producto</span>
+                    <span
+                      style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Nombre
+                      del Producto</span>
                     <input id="e2e-p-name" type="text" value="Monitor Gamer 24" placeholder="Nombre de Producto" />
                   </div>
                   <div>
-                    <span style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Precio Unitario</span>
+                    <span
+                      style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Precio
+                      Unitario</span>
                     <input id="e2e-p-price" type="number" value="3500.00" placeholder="Precio" />
                   </div>
                   <div>
-                    <span style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Stock Inicial</span>
+                    <span
+                      style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Stock
+                      Inicial</span>
                     <input id="e2e-p-stock" type="number" value="10" placeholder="Stock Inicial" />
                   </div>
                   <div>
-                    <span style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Cantidad a Comprar</span>
+                    <span
+                      style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Cantidad
+                      a Comprar</span>
                     <input id="e2e-o-qty" type="number" value="2" placeholder="Cantidad" title="Cantidad a comprar" />
                   </div>
                 </div>
@@ -411,41 +461,56 @@
 
               <!-- Flujo 2 -->
               <div style="border-left: 4px solid var(--primary-hover); padding-left: 15px; padding-bottom: 10px;">
-                <h3 style="margin-top: 0; color: var(--primary);"><i class='bx bx-money-withdraw'></i> Flujo 2: Pagos Recibidos</h3>
+                <h3 style="margin-top: 0; color: var(--primary);"><i class='bx bx-money-withdraw'></i> Flujo 2: Pagos
+                  Recibidos</h3>
 
                 <div class="form-grid" style="margin-top: 10px;">
                   <div>
-                    <span style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 4px;">ID de la Orden</span>
+                    <span style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 4px;">ID
+                      de la Orden</span>
                     <input id="e2e-payment-order-id" type="text" placeholder="ID de la Orden a pagar" />
                   </div>
                   <div>
-                    <span style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Monto a Pagar</span>
+                    <span
+                      style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Monto a
+                      Pagar</span>
                     <input id="e2e-payment-amount" type="number" step="0.01" placeholder="Ej. 7000.00" />
                   </div>
                   <div>
-                    <span style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Correo del Cliente</span>
-                    <input id="e2e-customer-email" type="email" value="alumno@universidad.edu" placeholder="Correo del cliente" />
+                    <span
+                      style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Correo
+                      del Cliente</span>
+                    <input id="e2e-customer-email" type="email" value="alumno@universidad.edu"
+                      placeholder="Correo del cliente" />
                   </div>
                 </div>
 
                 <div style="display: flex; gap: 10px; margin-top: 10px;">
-                  <button onclick="e2eProcesarPago(true)"><i class='bx bx-dollar-circle'></i> 4. Procesar Pago Total</button>
-                  <button onclick="e2eProcesarPago(false)" class="btn-outline"><i class='bx bx-coin-stack'></i> Procesar Pago Parcial</button>
-                  <button onclick="e2eVerPagosOrden()" style="background:transparent; border:1px dashed var(--text-muted); color:var(--text-muted);"><i class='bx bx-list-ul'></i> Ver Pagos de esta Orden</button>
+                  <button onclick="e2eProcesarPago(true)"><i class='bx bx-dollar-circle'></i> 4. Procesar Pago
+                    Total</button>
+                  <button onclick="e2eProcesarPago(false)" class="btn-outline"><i class='bx bx-coin-stack'></i> Procesar
+                    Pago Parcial</button>
+                  <button onclick="e2eVerPagosOrden()"
+                    style="background:transparent; border:1px dashed var(--text-muted); color:var(--text-muted);"><i
+                      class='bx bx-list-ul'></i> Ver Pagos de esta Orden</button>
                 </div>
               </div>
 
               <!-- Flujo 3 -->
               <div style="border-left: 4px solid var(--primary-hover); padding-left: 15px; padding-bottom: 10px;">
-                <h3 style="margin-top: 0; color: var(--primary);"><i class='bx bx-slider-alt'></i> Flujo 3: Actualizar Estatus</h3>
+                <h3 style="margin-top: 0; color: var(--primary);"><i class='bx bx-slider-alt'></i> Flujo 3: Actualizar
+                  Estatus</h3>
 
                 <div class="form-grid" style="margin-top: 10px;">
                   <div>
-                    <span style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 4px;">ID de la Orden</span>
+                    <span style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 4px;">ID
+                      de la Orden</span>
                     <input id="e2e-status-order-id" type="text" placeholder="ID de la Orden" />
                   </div>
                   <div>
-                    <span style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Nuevo Estatus</span>
+                    <span
+                      style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Nuevo
+                      Estatus</span>
                     <select id="e2e-new-status">
                       <option value="PAGADO" selected>PAGADO</option>
                       <option value="ENVIADO">ENVIADO</option>
@@ -464,9 +529,11 @@
           <div class="card">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
               <h2 style="margin: 0;"><i class='bx bx-data'></i> Estado (Variables Globales)</h2>
-              <button class="btn-danger" style="padding: 0.3rem 0.8rem; font-size: 0.8rem;" onclick="resetE2eState()"><i class='bx bx-reset'></i> Resetear</button>
+              <button class="btn-danger" style="padding: 0.3rem 0.8rem; font-size: 0.8rem;" onclick="resetE2eState()"><i
+                  class='bx bx-reset'></i> Resetear</button>
             </div>
-            <pre id="e2e-state" style="background: var(--mongo-gray); padding: 10px; border-radius: 4px; margin: 0; border: 1px solid var(--border-color);">
+            <pre id="e2e-state"
+              style="background: var(--mongo-gray); padding: 10px; border-radius: 4px; margin: 0; border: 1px solid var(--border-color);">
 Producto ID: N/A
 Orden ID: N/A
 Pago ID: N/A
@@ -480,54 +547,84 @@ Pago ID: N/A
 
     <!-- Info Kafka Flotante -->
     <div style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
-      <button onclick="document.getElementById('kafka-modal').style.display='block'" title="Ver Acciones de Kafka" style="border-radius: 50%; width: 55px; height: 55px; box-shadow: 0 4px 15px rgba(0,237,100,0.3); padding: 0; display: flex; align-items: center; justify-content: center; background: var(--mongo-slate); border: 2px solid var(--mongo-lime);">
+      <button onclick="document.getElementById('kafka-modal').style.display='block'" title="Ver Acciones de Kafka"
+        style="border-radius: 50%; width: 55px; height: 55px; box-shadow: 0 4px 15px rgba(0,237,100,0.3); padding: 0; display: flex; align-items: center; justify-content: center; background: var(--mongo-slate); border: 2px solid var(--mongo-lime);">
         <i class='bx bx-message-square-detail' style="font-size: 1.8rem; color: var(--mongo-lime);"></i>
       </button>
     </div>
 
     <!-- Modal Kafka -->
-    <div id="kafka-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,30,43,0.85); z-index: 1001; overflow-y: auto; padding: 2rem 0;">
-      <div style="margin: 0 auto; background: #ffffff; padding: 2.5rem; border-radius: var(--radius); width: 90%; max-width: 750px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+    <div id="kafka-modal"
+      style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,30,43,0.85); z-index: 1001; overflow-y: auto; padding: 2rem 0;">
+      <div
+        style="margin: 0 auto; background: #ffffff; padding: 2.5rem; border-radius: var(--radius); width: 90%; max-width: 750px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
         <h2 style="color: var(--mongo-forest); margin-top: 0; display: flex; align-items: center; gap: 10px;">
           <i class='bx bx-book-content'></i> Documentación Técnica: Integración con Kafka
         </h2>
         <div style="margin: 1.5rem 0; font-size: 0.95rem; line-height: 1.7; color: var(--text-muted);">
-          
-          <div style="margin-bottom: 20px; padding: 15px; background: rgba(0, 237, 100, 0.05); border-left: 4px solid var(--mongo-lime); border-radius: 4px;">
-            <strong style="color: var(--text-main); font-size: 1.1rem;"><i class='bx bx-cart-add'></i> 1. Generación de Orden (Descuento de Stock)</strong><br>
-            Al hacer <code>POST /ordenes</code>, el <strong>Order Service</strong> publica un evento para que el inventario se descuente asíncronamente.<br>
+
+          <div
+            style="margin-bottom: 20px; padding: 15px; background: rgba(0, 237, 100, 0.05); border-left: 4px solid var(--mongo-lime); border-radius: 4px;">
+            <strong style="color: var(--text-main); font-size: 1.1rem;"><i class='bx bx-cart-add'></i> 1. Generación de
+              Orden (Descuento de Stock)</strong><br>
+            Al hacer <code>POST /ordenes</code>, el <strong>Order Service</strong> publica un evento para que el
+            inventario se descuente asíncronamente.<br>
             <ul style="margin: 5px 0 5px 20px; font-size: 0.9rem;">
               <li><strong>Tópico Kafka:</strong> <code>inventory_update_events</code></li>
               <li><strong>Productor:</strong> Order Service | <strong>Consumidor:</strong> Product Service</li>
-              <li><strong>Flujo:</strong> El servicio de productos recibe la lista de artículos, valida y descuenta el <code>stock</code> en su base de datos.</li>
+              <li><strong>Flujo:</strong> El servicio de productos recibe la lista de artículos, valida y descuenta el
+                <code>stock</code> en su base de datos.</li>
             </ul>
           </div>
 
-          <div style="margin-bottom: 20px; padding: 15px; background: rgba(0, 237, 100, 0.05); border-left: 4px solid var(--mongo-lime); border-radius: 4px;">
-            <strong style="color: var(--text-main); font-size: 1.1rem;"><i class='bx bx-money'></i> 2. Generación de Pago (Recálculo y Envío)</strong><br>
-            Al hacer <code>POST /pagos-api/procesar</code>, el <strong>Payment Service</strong> procesa la transacción y notifica al resto del ecosistema.<br>
+          <div
+            style="margin-bottom: 20px; padding: 15px; background: rgba(0, 237, 100, 0.05); border-left: 4px solid var(--mongo-lime); border-radius: 4px;">
+            <strong style="color: var(--text-main); font-size: 1.1rem;"><i class='bx bx-money'></i> 2. Generación de
+              Pago (Recálculo y Envío)</strong><br>
+            Al hacer <code>POST /pagos-api/procesar</code>, el <strong>Payment Service</strong> procesa la transacción y
+            notifica al resto del ecosistema.<br>
             <ul style="margin: 5px 0 5px 20px; font-size: 0.9rem;">
               <li><strong>Tópico Kafka:</strong> <code>payment_received_events</code></li>
-              <li><strong>Productor:</strong> Payment Service | <strong>Consumidor:</strong> Broker Message / Order Service</li>
-              <li><strong>Flujo:</strong> El sistema escucha el pago, suma los montos y recalcula el total faltante de la orden. <strong>Si la orden está 100% pagada</strong>, el sistema inserta automáticamente el registro en la tabla de <strong>Envíos Programados</strong> alojada en PostgreSQL.</li>
+              <li><strong>Productor:</strong> Payment Service | <strong>Consumidor:</strong> Broker Message / Order
+                Service</li>
+              <li><strong>Flujo:</strong> El sistema escucha el pago, suma los montos y recalcula el total faltante de
+                la orden. <strong>Si la orden está 100% pagada</strong>, el sistema inserta automáticamente el registro
+                en la tabla de <strong>Envíos Programados</strong> alojada en PostgreSQL.</li>
             </ul>
           </div>
 
-          <div style="margin-bottom: 20px; padding: 15px; background: rgba(245, 158, 11, 0.05); border-left: 4px solid var(--yellow); border-radius: 4px;">
-            <strong style="color: var(--text-main); font-size: 1.1rem;"><i class='bx bx-shield-quarter'></i> 3. Tolerancia a Fallos (Patrón Retry)</strong><br>
-            Si cualquier base de datos está caída o falla una operación (CREATE, UPDATE, DELETE), el servicio no pierde el dato, sino que lo encola para intentar después.<br>
+          <div
+            style="margin-bottom: 20px; padding: 15px; background: rgba(245, 158, 11, 0.05); border-left: 4px solid var(--yellow); border-radius: 4px;">
+            <strong style="color: var(--text-main); font-size: 1.1rem;"><i class='bx bx-shield-quarter'></i> 3.
+              Tolerancia a Fallos (Patrón Retry)</strong><br>
+            Si cualquier base de datos está caída o falla una operación (CREATE, UPDATE, DELETE), el servicio no pierde
+            el dato, sino que lo encola para intentar después.<br>
             <ul style="margin: 5px 0 5px 20px; font-size: 0.9rem;">
-              <li><strong>Tópicos Kafka:</strong> <code>product_retry_jobs</code>, <code>order_retry_jobs</code>, <code>payments_retry_jobs</code></li>
-              <li><strong>Flujo:</strong> El <strong>Broker Message BE</strong> escucha estos tópicos y guarda los jobs fallidos en PostgreSQL. Un <em>Scheduler</em> (CronJob) los lee periódicamente e intenta re-ejecutar la operación hacia las APIs hasta que tenga éxito.</li>
+              <li><strong>Tópicos Kafka:</strong> <code>product_retry_jobs</code>, <code>order_retry_jobs</code>,
+                <code>payments_retry_jobs</code></li>
+              <li><strong>Flujo:</strong> El <strong>Broker Message BE</strong> escucha estos tópicos y guarda los jobs
+                fallidos en PostgreSQL. Un <em>Scheduler</em> (CronJob) los lee periódicamente e intenta re-ejecutar la
+                operación hacia las APIs hasta que tenga éxito.</li>
             </ul>
           </div>
 
         </div>
-        <button class="btn-outline" style="width: 100%; padding: 10px; font-size: 1rem;" onclick="document.getElementById('kafka-modal').style.display='none'"><i class='bx bx-check-circle'></i> Entendido, cerrar documento</button>
+        <button class="btn-outline" style="width: 100%; padding: 10px; font-size: 1rem;"
+          onclick="document.getElementById('kafka-modal').style.display='none'"><i class='bx bx-check-circle'></i>
+          Entendido, cerrar documento</button>
       </div>
     </div>
 
-    <script src="app.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/components/productos.js"></script>
+    <script src="js/components/ordenes.js"></script>
+    <script src="js/components/pagos.js"></script>
+    <script src="js/components/envios.js"></script>
+    <script src="js/components/broker.js"></script>
+    <script src="js/components/logs.js"></script>
+    <script src="js/components/flujos.js"></script>
+    <script src="js/main.js"></script>
 </body>
 
 </html>

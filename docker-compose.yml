@@ -92,6 +92,7 @@ services:
       /opt/kafka/bin/kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic product_retry_jobs &&
       /opt/kafka/bin/kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic order_retry_jobs &&
       /opt/kafka/bin/kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic payments_retry_jobs &&
+      /opt/kafka/bin/kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic envios_retry_jobs &&
       echo 'Topics created successfully' &&
       /opt/kafka/bin/kafka-topics.sh --list --bootstrap-server kafka:9092
       "
@@ -200,6 +201,7 @@ services:
       - SPRING_DATA_MONGODB_URI=mongodb+srv://modelo_prueba_test_admin:1vn8n1sk3oZ71Bvz@cluster.xogfhlf.mongodb.net/productos_db?retryWrites=true&w=majority
       - SPRING_CLOUD_COMPATIBILITY_VERIFIER_ENABLED=false
       - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+      - ORDER_SERVICE_URL=http://apigateway:8080/ordenes
     depends_on:
       eureka-server:
         condition: service_healthy
@@ -231,6 +233,8 @@ services:
       - SPRING_DATA_MONGODB_URI=mongodb+srv://modelo_prueba_test_admin:1vn8n1sk3oZ71Bvz@cluster.xogfhlf.mongodb.net/ordenes_db?retryWrites=true&w=majority
       - SPRING_CLOUD_COMPATIBILITY_VERIFIER_ENABLED=false
       - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+      - PRODUCT_SERVICE_URL=http://apigateway:8080/productos
+      - PAYMENT_SERVICE_URL=http://apigateway:8080/pagos
     depends_on:
       eureka-server:
         condition: service_healthy
@@ -262,6 +266,7 @@ services:
       - SPRING_DATA_MONGODB_URI=mongodb+srv://modelo_prueba_test_admin:1vn8n1sk3oZ71Bvz@cluster.xogfhlf.mongodb.net/pagos_db?retryWrites=true&w=majority
       - SPRING_CLOUD_COMPATIBILITY_VERIFIER_ENABLED=false
       - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+      - ORDER_SERVICE_URL=http://apigateway:8080/ordenes
     depends_on:
       eureka-server:
         condition: service_healthy

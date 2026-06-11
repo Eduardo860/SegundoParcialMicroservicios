@@ -126,6 +126,36 @@ CREATE INDEX IF NOT EXISTS idx_envios_customer_email
     ON public.envios (customer_email);
 
 -- =====================================================
+-- ENVIOS RETRY JOBS
+-- =====================================================
+CREATE TABLE IF NOT EXISTS public.envio_retry_jobs (
+    id         uuid DEFAULT uuid_generate_v4() NOT NULL,
+    envio_id   varchar                         NOT NULL,
+    request_data  text                         NULL,
+    response_data text                         NULL,
+    action     varchar                         NOT NULL,
+    attempt    int4    NOT NULL DEFAULT 0,
+    status     varchar NOT NULL DEFAULT 'SCHEDULED',
+    next_run_at timestamptz DEFAULT now()      NOT NULL,
+    created_at  timestamptz DEFAULT now()      NOT NULL,
+    updated_at  timestamptz DEFAULT now()      NOT NULL,
+    CONSTRAINT pk_envio_retry_jobs PRIMARY KEY (id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_envio_retry_envio_id
+    ON public.envio_retry_jobs (envio_id);
+
+CREATE INDEX IF NOT EXISTS idx_envio_retry_status
+    ON public.envio_retry_jobs (status);
+
+CREATE INDEX IF NOT EXISTS idx_envio_retry_next_run_status
+    ON public.envio_retry_jobs (next_run_at, status)
+    WHERE status = 'SCHEDULED';
+
+CREATE INDEX IF NOT EXISTS idx_envio_retry_unique_action
+    ON public.envio_retry_jobs (envio_id, action);
+
+-- =====================================================
 -- RETRY JOBS (GENERAL)
 -- =====================================================
 CREATE TABLE IF NOT EXISTS public.retry_jobs (
@@ -173,6 +203,9 @@ CREATE TRIGGER update_payments_retry_jobs_updated_at BEFORE UPDATE ON public.pay
     FOR EACH ROW EXECUTE PROCEDURE update_updated_at_column();
 
 CREATE TRIGGER update_envios_updated_at BEFORE UPDATE ON public.envios
+    FOR EACH ROW EXECUTE PROCEDURE update_updated_at_column();
+
+CREATE TRIGGER update_envio_retry_jobs_updated_at BEFORE UPDATE ON public.envio_retry_jobs
     FOR EACH ROW EXECUTE PROCEDURE update_updated_at_column();
 
 CREATE TRIGGER update_retry_jobs_updated_at BEFORE UPDATE ON public.retry_jobs

@@ -72,6 +72,14 @@ public class PaymentReceivedEventListener {
                         // 3. Guardar en tabla envios
                         envioService.createEnvio(orderId, orderEmail);
                     }
+                    
+                    // 4. Actualizar estado de la orden a PAGADO
+                    try {
+                        restTemplate.put(orderServiceUrl + "/" + orderId + "/status?status=PAGADO", null);
+                        logger.info("Order {} status updated to PAGADO", orderId);
+                    } catch (Exception ex) {
+                        logger.error("Failed to update order {} status to PAGADO: {}", orderId, ex.getMessage());
+                    }
                 }
             } else {
                 logger.info("Order {} is not fully paid yet", orderId);
